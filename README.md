@@ -42,7 +42,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Create and Release
-        uses: b-n/releasify
+        uses: b-n/releasify@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -57,6 +57,6 @@ jobs:
 
 This command will:
 
-1. Compress the glob `**/*` from the `docs` working directory (runs `tar -zcvf $OUTPUT_FILE **/*`)
+1. Compress the glob `**/*` from the `docs` working directory (runs `tar -zcvf ${{ inputs.name }} **/*`)
 2. Looks for the `documentation` release name, if it does not exist, it creates it (in draft)
 3. Uploads the compressed output to the release

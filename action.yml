@@ -1,0 +1,38 @@
+name: 'Releasify'
+description: 'An all in one file compressor + release creator + release asset uploader'
+author: 'Ben Naylor (nayben@gmail.com)'
+inputs:
+  release_name:
+    description: 'The name of the release to target'
+    required: true
+  name:
+    description: 'The name of the asset to upload'
+    required: true
+  compress:
+    description: 'Whether to run a requisite compression or not'
+    required: false
+    default: false
+  glob:
+    description: 'If running the compress, the glob to compress'
+    required: false
+  working_directory:
+    description: 'The working directory to change to (may help with compression)'
+    required: false
+    default: './'
+  clobber:
+    description: 'Overwrite the asset if it already exists (will fail the workflow if false and the file exists)'
+    required: false
+    default: false
+  create_release:
+    description: 'If the release does not exist and this is true, then a release will be created in draft'
+    required: false
+    default: true
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        if [ "${{inputs.compress}}" = "true" ]
+        then
+          tar -zcvf "${{inputs.name}}" "${{secrets.glob}}"
+        fi
+      shell: bash
